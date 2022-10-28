@@ -8,16 +8,16 @@ using System.Text;
 
 namespace SmartHome.Services
 {
-    public interface IJWTService
+    public interface IJwtService
     {
-        AuthResponse GenerateJWTToken(UserDto user);
+        AuthResponse GenerateJwtToken(UserDto user);
     }
-    public class JWTService : IJWTService
+    public class JwtService : IJwtService
     {
         private readonly AppSettings _appSettings;
-        public JWTService(IOptions<AppSettings> appSettings) => _appSettings = appSettings.Value;
+        public JwtService(IOptions<AppSettings> appSettings) => _appSettings = appSettings.Value;
       
-        public AuthResponse GenerateJWTToken(UserDto user)
+        public AuthResponse GenerateJwtToken(UserDto user)
         {
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_appSettings.Secret));
 
