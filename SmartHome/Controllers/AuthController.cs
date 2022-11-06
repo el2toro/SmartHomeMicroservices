@@ -4,6 +4,7 @@ using SmartHome.Interfaces;
 using SmartHome.Models.Auth;
 using SmartHome.Models.Common;
 using SmartHome.Services;
+using System.Net;
 
 namespace SmartHome.Controllers
 {
@@ -19,6 +20,9 @@ namespace SmartHome.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<AuthResponse>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Login([FromBody] UserDto user)
         {
             var result = _authRepository.Authenticate(user);

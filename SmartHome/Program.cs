@@ -4,7 +4,6 @@ using SmartHome.Models.Auth;
 using SmartHome.Repository.Auth;
 using SmartHome.Services;
 using System.Text;
-using AutoMapper.Configuration;
 using SmartHome.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
