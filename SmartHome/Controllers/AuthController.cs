@@ -29,7 +29,7 @@ namespace SmartHome.Controllers
 
             if (result == null) return NotFound();
 
-            user.Role = "Admin";
+            user.Role = "Administrator";
             var responese = _jwtService.GenerateJwtToken(user);
 
             return Ok(new Response<AuthResponse>(responese));
