@@ -4,6 +4,7 @@ using SmartHome.Models.Auth;
 using SmartHome.Repository.Auth;
 using SmartHome.Services;
 using System.Text;
+using SmartHome.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +17,11 @@ builder.Services.AddSwaggerGen();
 
 // Add Dependancies
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
-builder.Services.AddTransient<IJWTService, JWTService>();
+builder.Services.AddTransient<IJwtService, JwtService>();
 
 builder.Services.AddDbContext<SmartHomeContext>();
+
+builder.Services.AddAutoMapper(typeof(UserProfile));
 
 var configuration = builder.Configuration;
 
