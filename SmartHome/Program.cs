@@ -5,6 +5,7 @@ using SmartHome.Repository.Auth;
 using SmartHome.Services;
 using System.Text;
 using SmartHome.Profiles;
+using SmartHome.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 // Add Dependancies
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<IJwtService, JwtService>();
+builder.Services.AddTransient<IWeatherRepository, WeatherRepository>();
 
 builder.Services.AddDbContext<SmartHomeContext>();
 
