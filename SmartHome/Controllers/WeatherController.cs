@@ -22,5 +22,16 @@ namespace SmartHome.Controllers
 
             return Ok(new Response<string>(result));
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult GetWeeklyWeatherReport()
+        {
+            //TODO
+            //Create a repository method to get weather report for a week
+
+            return Ok();
+        }
     }
 }

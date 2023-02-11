@@ -25,6 +25,8 @@ namespace SmartHome.Repository
             return temp.Split(" ").Last();
         }
 
+
+        //TODO: Refactoring => create a scrapper add methods to it
         public async Task<string> GetHtml(string url)
         {
             var client = new HttpClient();
