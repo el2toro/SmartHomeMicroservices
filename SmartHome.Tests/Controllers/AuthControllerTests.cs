@@ -29,23 +29,15 @@ namespace SmartHome.Tests.Controllers
         [Test]  
         public void Login_Should_Return_OK()
         {
-            var user = new UserDto()
+            var user = new UserDto() 
             {
+                Username = "username",
                 Password = "password123",
-                Username = "myusername",
-                Role = "Admin"
+                Role = "Admin" 
             };
 
-            var response = new AuthResponse()
-            {
-                Username = user.Username,
-                Role = user.Role,
-                Expiration = System.DateTime.Now.AddDays(1),
-                Token = "my sasihcbsdav8c745sadvasdvaf7v8sd"
-            };
-
-            _authRepository.Setup(c => c.Authenticate(It.IsAny<UserDto>())).Returns(user);
-            _jwtService.Setup(c => c.GenerateJwtToken(It.IsAny<UserDto>())).Returns(response);
+            _authRepository.Setup(c => c.Authenticate(It.IsAny<UserDto>())).Returns(new UserDto());
+            _jwtService.Setup(c => c.GenerateJwtToken(It.IsAny<UserDto>())).Returns(new AuthResponse());
 
             var result = _sut.Login(user);
 
@@ -57,21 +49,13 @@ namespace SmartHome.Tests.Controllers
         {
             var user = new UserDto()
             {
+                Username = "username",
                 Password = "password123",
-                Username = "myusername",
                 Role = "Admin"
             };
 
-            var response = new AuthResponse()
-            {
-                Username = user.Username,
-                Role = user.Role,
-                Expiration = System.DateTime.Now.AddDays(1),
-                Token = "my sasihcbsdav8c745sadvasdvaf7v8sd"
-            };
-
             _authRepository.Setup(c => c.Authenticate(It.IsAny<UserDto>())).Returns(user = null);
-            _jwtService.Setup(c => c.GenerateJwtToken(It.IsAny<UserDto>())).Returns(response);
+            _jwtService.Setup(c => c.GenerateJwtToken(It.IsAny<UserDto>())).Returns(new AuthResponse());
 
             var result = _sut.Login(user);
 
