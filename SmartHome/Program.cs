@@ -5,19 +5,20 @@ using SmartHome.Repository.Auth;
 using SmartHome.Services;
 using System.Text;
 using SmartHome.Profiles;
+using SmartHome.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Dependancies
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<IJwtService, JwtService>();
+builder.Services.AddTransient<IWeatherRepository, WeatherRepository>();
 
 builder.Services.AddDbContext<SmartHomeContext>();
 
@@ -55,9 +56,7 @@ app.UseCors(options =>
             .AllowAnyMethod());
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
