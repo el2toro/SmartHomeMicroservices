@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartHome.DTOs.Weather;
 using SmartHome.Models.Common;
 using SmartHome.Repository;
 
@@ -14,7 +15,7 @@ namespace SmartHome.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetTemperature()
         {
@@ -24,14 +25,13 @@ namespace SmartHome.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<WeekWeatherDto>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetWeeklyWeatherReport()
-        {
-            //TODO
-            //Create a repository method to get weather report for a week
+        {        
+            var result = _repository.GetWeeklyWeatherReport().Result;
 
-            return Ok();
+            return Ok(new Response<IEnumerable<WeekWeatherDto>>(result));
         }
     }
 }
