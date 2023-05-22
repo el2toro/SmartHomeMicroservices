@@ -40,15 +40,17 @@ namespace SmartHome.Repository.Auth
                 {
                     user.Password = changePassword.NewPassword;
                     result = _context.SaveChanges();
+
+                    return (result is not 0) ? true : false;
                 }
+                
+                return false;
+                
             }
             catch (Exception)
             {
-
                 throw;
-            } 
-
-            return (result is not 0) ? true : false;
+            }          
         }
     }
 }
