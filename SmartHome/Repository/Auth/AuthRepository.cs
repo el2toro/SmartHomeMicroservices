@@ -15,6 +15,14 @@ namespace SmartHome.Repository.Auth
             _context = context;
             _mapper = mapper;
         }
+
+        public string CheckUserExist(string userName)
+        {
+            var result = _context.Users.Where(u => u.Username == userName).FirstOrDefault();
+
+            return result?.Username;
+        }
+
         public UserDto Authenticate(UserDto user)
         {
             var result = _context.Users.Where(u => u.Username == user.Username && u.Password == user.Password)

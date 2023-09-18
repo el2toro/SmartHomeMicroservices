@@ -7,5 +7,6 @@ namespace SmartHome.Interfaces
     {
         UserDto Authenticate(UserDto user);
         bool ChangePassword(ChangePassword changePassword);
+        string CheckUserExist(string userName);
     }
 }

@@ -25,14 +25,18 @@ namespace SmartHome.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Login([FromBody] UserDto user)
         {
+            var userName = _authRepository.CheckUserExist(user.Username);
+
+            if (userName == null) return NotFound();
+
             var result = _authRepository.Authenticate(user);
 
-            if (result == null) return NotFound();
+            if (result == null) return BadRequest();
 
             user.Role = "Admin";
-            var responese = _jwtService.GenerateJwtToken(user);
+            var response = _jwtService.GenerateJwtToken(user);
 
-            return Ok(new Response<AuthResponse>(responese));
+            return Ok(new Response<AuthResponse>(response));
         }
 
         [HttpPost]
