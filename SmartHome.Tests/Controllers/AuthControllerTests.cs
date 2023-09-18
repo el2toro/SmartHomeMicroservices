@@ -6,9 +6,7 @@ using SmartHome.Controllers;
 using SmartHome.DTOs;
 using SmartHome.Interfaces;
 using SmartHome.Models.Auth;
-using SmartHome.Models.Common;
 using SmartHome.Services;
-using System.Net;
 
 namespace SmartHome.Tests.Controllers
 {
@@ -36,6 +34,7 @@ namespace SmartHome.Tests.Controllers
                 Role = "Admin" 
             };
 
+            _authRepository.Setup(c => c.CheckUserExist(It.IsAny<string>())).Returns(user.Username);
             _authRepository.Setup(c => c.Authenticate(It.IsAny<UserDto>())).Returns(new UserDto());
             _jwtService.Setup(c => c.GenerateJwtToken(It.IsAny<UserDto>())).Returns(new AuthResponse());
 
@@ -54,12 +53,32 @@ namespace SmartHome.Tests.Controllers
                 Role = "Admin"
             };
 
-            _authRepository.Setup(c => c.Authenticate(It.IsAny<UserDto>())).Returns(user = null);
+            _authRepository.Setup(c => c.CheckUserExist(It.IsAny<string>())).Returns(user.Username = null);
+            _authRepository.Setup(c => c.Authenticate(It.IsAny<UserDto>())).Returns(user);
             _jwtService.Setup(c => c.GenerateJwtToken(It.IsAny<UserDto>())).Returns(new AuthResponse());
-
             var result = _sut.Login(user);
 
             Assert.That(((NotFoundResult)result).StatusCode == StatusCodes.Status404NotFound);
+        }
+
+        [Test]
+        public void Login_Should_Return_BadRequest()
+        {
+            var user = new UserDto()
+            {
+                Username = "username",
+                Password = "password123",
+                Role = "Admin"
+            };
+
+            UserDto response = null;
+
+            _authRepository.Setup(c => c.CheckUserExist(It.IsAny<string>())).Returns(user.Username);
+            _authRepository.Setup(c => c.Authenticate(It.IsAny<UserDto>())).Returns(response);
+            _jwtService.Setup(c => c.GenerateJwtToken(It.IsAny<UserDto>())).Returns(new AuthResponse());
+            var result = _sut.Login(user);
+
+            Assert.That(((BadRequestResult)result).StatusCode == StatusCodes.Status400BadRequest);
         }
     }
 }
