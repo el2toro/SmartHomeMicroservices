@@ -2,6 +2,7 @@
 using SmartHome.Context;
 using SmartHome.DTOs;
 using SmartHome.Interfaces;
+using SmartHome.Models.Auth;
 
 namespace SmartHome.Repository.Auth
 {
@@ -27,5 +28,29 @@ namespace SmartHome.Repository.Auth
             return null;
         }
 
+        public bool ChangePassword(ChangePassword changePassword)
+        {
+            int result = 0;
+
+            try
+            {
+                var user = _context.Users.Where(u => u.Username == changePassword.Username && u.Password == changePassword.CurrentPassword)
+                                       .SingleOrDefault();
+                if (user != null)
+                {
+                    user.Password = changePassword.NewPassword;
+                    result = _context.SaveChanges();
+
+                    return (result is not 0) ? true : false;
+                }
+                
+                return false;
+                
+            }
+            catch (Exception)
+            {
+                throw;
+            }          
+        }
     }
 }

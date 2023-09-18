@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<EnvironmentName>Development</EnvironmentName>
+	</PropertyGroup>
+	
   <ItemGroup>
     <PackageReference Include="AngleSharp.Js" Version="0.15.0" />
     <PackageReference Include="AutoMapper" Version="11.0.1" />
@@ -22,6 +26,5 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-  </ItemGroup>
-
+ </ItemGroup>
 </Project>

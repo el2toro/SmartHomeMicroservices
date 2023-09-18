@@ -34,5 +34,20 @@ namespace SmartHome.Controllers
 
             return Ok(new Response<AuthResponse>(responese));
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<string>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult ChangePassword([FromBody] ChangePassword changePassword)
+        {
+            if (changePassword == null) return BadRequest("Not valid parameters.");  
+
+            var result = _authRepository.ChangePassword(changePassword);
+
+            if (!result) return NotFound();
+
+            return Ok(new Response<string>("Password changed succesfuly!"));
+        }
     }
 }
