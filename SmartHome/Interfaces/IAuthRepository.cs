@@ -6,7 +6,7 @@ namespace SmartHome.Interfaces
     public interface IAuthRepository
     {
         UserDto Authenticate(UserDto user);
-        bool ChangePassword(ChangePassword changePassword);
-        string CheckUserExist(string userName);
+        bool RessetPassword(RessetPassword changePassword);
+        bool CheckUserExist(string userName);
     }
 }

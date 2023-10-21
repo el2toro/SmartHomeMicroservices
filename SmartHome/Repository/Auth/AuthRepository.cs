@@ -16,11 +16,11 @@ namespace SmartHome.Repository.Auth
             _mapper = mapper;
         }
 
-        public string CheckUserExist(string userName)
+        public bool CheckUserExist(string userName)
         {
             var result = _context.Users.Where(u => u.Username == userName).FirstOrDefault();
 
-            return result?.Username;
+            return result != null;
         }
 
         public UserDto Authenticate(UserDto user)
@@ -36,13 +36,13 @@ namespace SmartHome.Repository.Auth
             return null;
         }
 
-        public bool ChangePassword(ChangePassword changePassword)
+        public bool RessetPassword(RessetPassword changePassword)
         {
             int result = 0;
 
             try
             {
-                var user = _context.Users.Where(u => u.Username == changePassword.Username && u.Password == changePassword.CurrentPassword)
+                var user = _context.Users.Where(u => u.Username == changePassword.Username && u.Password == changePassword.OldPassword)
                                        .SingleOrDefault();
                 if (user != null)
                 {

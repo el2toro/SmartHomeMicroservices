@@ -25,9 +25,7 @@ namespace SmartHome.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Login([FromBody] UserDto user)
         {
-            var userName = _authRepository.CheckUserExist(user.Username);
-
-            if (userName == null) return NotFound();
+            if (!_authRepository.CheckUserExist(user.Username)) return NotFound();
 
             var result = _authRepository.Authenticate(user);
 
@@ -43,11 +41,11 @@ namespace SmartHome.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<string>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult ChangePassword([FromBody] ChangePassword changePassword)
+        public IActionResult RessetPassword([FromBody] RessetPassword ressetPassword)
         {
-            if (changePassword == null) return BadRequest("Not valid parameters.");  
+            if (ressetPassword == null) return BadRequest("Not valid parameters.");  
 
-            var result = _authRepository.ChangePassword(changePassword);
+            var result = _authRepository.RessetPassword(ressetPassword);
 
             if (!result) return NotFound();
 
