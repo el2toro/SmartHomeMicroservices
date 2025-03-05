@@ -5,5 +5,5 @@
 /*/obj/*
 
 
-
-/Services/UserManagement/UserManagement.API
+/Services/UserManagement/UserManagement.API/bin/Debug/net8.0
+/Services/UserManagement/UserManagement.API/obj

@@ -11,7 +11,7 @@ app.UseHttpsRedirection();
 
 app.MapGet("/weatherforecast", () =>
 {
-    zcv
+
 });
 
 app.Run();
