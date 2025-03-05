@@ -2,6 +2,15 @@
 
 public record GetUserByIdQuery(int Id) : IQuery<GetUserByIdResult>;
 public record GetUserByIdResult(User User);
+
+public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
+{
+    public GetUserByIdQueryValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("UserId is required");
+    }
+}
+
 internal class GetUserByIdQueryHandler(UserDbContext dbContext)
     : IQueryHandler<GetUserByIdQuery, GetUserByIdResult>
 {

@@ -7,3 +7,4 @@ global using UserManagement.API.Models;
 global using Core.CQRS;
 global using Microsoft.EntityFrameworkCore;
 global using UserManagement.API.Exceptions;
+global using FluentValidation;

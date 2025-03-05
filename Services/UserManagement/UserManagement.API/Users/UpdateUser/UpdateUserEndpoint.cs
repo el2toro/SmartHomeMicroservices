@@ -11,7 +11,7 @@ public class UpdateUserEndpoint : ICarterModule
             var result = await sender.Send(new UpdateUserCommand(usedDto, id));
             var response = result.Adapt<UpdateUserResponse>();
 
-            return Results.Created();
+            return Results.Ok(response);
         })
         .WithName("UpdateUser")
         .Produces<UpdateUserResponse>(StatusCodes.Status200OK)

@@ -2,6 +2,18 @@
 
 public record UpdateUserCommand(UserDto UserDto, int UserId) : ICommand<UpdateUserResult>;
 public record UpdateUserResult(bool IsSuccess);
+
+public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
+{
+    public UpdateUserCommandValidator()
+    {
+        RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId is required");
+        RuleFor(x => x.UserDto.UserName).NotEmpty().WithMessage("UserName is required");
+        RuleFor(x => x.UserDto.Email).NotEmpty().WithMessage("Email is required");
+        RuleFor(x => x.UserDto.Password).NotEmpty().WithMessage("Password is required");
+    }
+}
+
 internal class UpdateUserHandler(UserDbContext dbContext)
     : ICommandHandler<UpdateUserCommand, UpdateUserResult>
 {
