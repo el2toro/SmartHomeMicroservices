@@ -7,12 +7,9 @@ internal class GetUserByIdQueryHandler(UserDbContext dbContext)
 {
     public async Task<GetUserByIdResult> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
     {
-        User user = await dbContext.Users.FirstOrDefaultAsync(u => u.UserId == query.Id, cancellationToken);
-
-        if (user == null)
-        {
+        User user = await dbContext.Users.FindAsync(query.Id, cancellationToken) ??
             throw new ArgumentNullException();
-        }
+
         return new GetUserByIdResult(user);
     }
 }

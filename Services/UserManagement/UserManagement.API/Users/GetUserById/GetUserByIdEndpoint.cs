@@ -1,6 +1,4 @@
-﻿using UserManagement.API.Users.GetUserById;
-
-namespace UserManagement.API.Users.GetUsers;
+﻿namespace UserManagement.API.Users.GetUserById;
 
 //public record GetUserByIdRequest(int Id);
 public record GetUserByIdResponse(User User);

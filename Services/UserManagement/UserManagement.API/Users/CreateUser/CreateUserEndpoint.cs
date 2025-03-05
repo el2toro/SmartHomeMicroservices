@@ -1,4 +1,4 @@
-﻿namespace UserManagement.API.Users.GetUsers;
+﻿namespace UserManagement.API.Users.CreateUser;
 
 public record CreateUserRequest(UserDto UserDto);
 public record CreateUserResponse(bool IsSuccess);

@@ -9,18 +9,15 @@ internal class UpdateUserHandler(UserDbContext dbContext)
     {
         try
         {
-            User user = await dbContext.Users.FirstOrDefaultAsync(u => u.UserId == command.UserId);
-            if (user == null)
-            {
+            User user = await dbContext.Users.FindAsync(command.UserId) ??
                 throw new ArgumentNullException();
-            }
 
             user.UserName = command.UserDto.UserName;
             user.Password = command.UserDto.Password;
             user.Email = command.UserDto.Email;
 
             dbContext.Users.Update(user);
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return new UpdateUserResult(true);
         }

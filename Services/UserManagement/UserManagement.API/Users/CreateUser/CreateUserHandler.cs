@@ -17,7 +17,7 @@ internal class CreateUserHandler(UserDbContext dbContext)
         try
         {
             dbContext.Users.Add(user);
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return new CreateUserResult(true);
         }

@@ -1,6 +1,4 @@
-﻿using UserManagement.API.Users.UpdateUser;
-
-namespace UserManagement.API.Users.GetUsers;
+﻿namespace UserManagement.API.Users.UpdateUser;
 
 public record UpdateUserRequest(UserDto UserDto, int UserId);
 public record UpdateUserResponse(bool IsSuccess);
