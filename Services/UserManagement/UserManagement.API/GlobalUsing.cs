@@ -1,0 +1,9 @@
+﻿global using Carter;
+global using Mapster;
+global using MediatR;
+global using UserManagement.API.Users.CreateUser;
+global using UserManagement.API.Data;
+global using UserManagement.API.Dtos;
+global using UserManagement.API.Models;
+global using Core.CQRS;
+global using Microsoft.EntityFrameworkCore;
