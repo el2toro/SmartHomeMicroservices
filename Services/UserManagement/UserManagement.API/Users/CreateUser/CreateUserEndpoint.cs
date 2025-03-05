@@ -14,7 +14,7 @@ public class CreateUserEndpoint : ICarterModule
             return Results.Created();
         })
         .WithName("CreateUser")
-        .Produces<CreateUserResponse>(StatusCodes.Status200OK)
+        .Produces<CreateUserResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Create User")
         .WithDescription("Create User");

@@ -1,5 +1,4 @@
-﻿using Carter;
-using UserManagement.API.Users.GetUserById;
+﻿using UserManagement.API.Users.GetUserById;
 
 namespace UserManagement.API.Users.GetUsers;
 
