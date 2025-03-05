@@ -1,7 +1,4 @@
 ﻿using Carter;
-using Mapster;
-using MediatR;
-using UserManagement.API.Models;
 using UserManagement.API.Users.GetUserById;
 
 namespace UserManagement.API.Users.GetUsers;

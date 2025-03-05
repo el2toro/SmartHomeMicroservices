@@ -1,9 +1,4 @@
-﻿using UserManagement.API.Models;
-using Core.CQRS;
-using UserManagement.API.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace UserManagement.API.Users.GetUsers;
+﻿namespace UserManagement.API.Users.GetUsers;
 
 public record GetUsersQuery() : IQuery<GetUsersResult>;
 public record GetUsersResult(IEnumerable<User> Users);

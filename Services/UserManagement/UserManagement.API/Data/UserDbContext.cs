@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using UserManagement.API.Models;
-
-namespace UserManagement.API.Data;
+﻿namespace UserManagement.API.Data;
 
 public class UserDbContext : DbContext
 {

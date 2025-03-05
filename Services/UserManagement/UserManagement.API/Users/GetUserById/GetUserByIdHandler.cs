@@ -1,9 +1,4 @@
-﻿using Core.CQRS;
-using Microsoft.EntityFrameworkCore;
-using UserManagement.API.Data;
-using UserManagement.API.Models;
-
-namespace UserManagement.API.Users.GetUserById;
+﻿namespace UserManagement.API.Users.GetUserById;
 
 public record GetUserByIdQuery(int Id) : IQuery<GetUserByIdResult>;
 public record GetUserByIdResult(User User);

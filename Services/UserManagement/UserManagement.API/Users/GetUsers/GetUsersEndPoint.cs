@@ -1,11 +1,6 @@
-﻿using Carter;
-using Mapster;
-using MediatR;
-using UserManagement.API.Models;
+﻿namespace UserManagement.API.Users.GetUsers;
 
-namespace UserManagement.API.Users.GetUsers;
-
-public record GetUsersRequest();
+//public record GetUsersRequest();
 public record GetUsersResponse(IEnumerable<User> Users);
 public class GetUsersEndpoint : ICarterModule
 {
