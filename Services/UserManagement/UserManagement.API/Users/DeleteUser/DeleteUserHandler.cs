@@ -7,21 +7,13 @@ internal class DeleteUserHandler(UserDbContext dbContext)
 {
     public async Task<DeleteUserResult> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        try
-        {
-            User user = await dbContext.Users.FindAsync(command.Id, cancellationToken) ??
-                throw new ArgumentNullException();
+        User user = await dbContext.Users.FindAsync(command.Id, cancellationToken) ??
+            throw new UserNotFoundException(command.Id);
 
 
-            dbContext.Users.Remove(user);
-            await dbContext.SaveChangesAsync(cancellationToken);
+        dbContext.Users.Remove(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
-            return new DeleteUserResult(true);
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        return new DeleteUserResult(true);
     }
 }

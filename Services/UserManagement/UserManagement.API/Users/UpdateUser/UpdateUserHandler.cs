@@ -7,24 +7,16 @@ internal class UpdateUserHandler(UserDbContext dbContext)
 {
     public async Task<UpdateUserResult> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        try
-        {
-            User user = await dbContext.Users.FindAsync(command.UserId) ??
-                throw new ArgumentNullException();
+        User user = await dbContext.Users.FindAsync(command.UserId) ??
+            throw new UserNotFoundException(command.UserId);
 
-            user.UserName = command.UserDto.UserName;
-            user.Password = command.UserDto.Password;
-            user.Email = command.UserDto.Email;
+        user.UserName = command.UserDto.UserName;
+        user.Password = command.UserDto.Password;
+        user.Email = command.UserDto.Email;
 
-            dbContext.Users.Update(user);
-            await dbContext.SaveChangesAsync(cancellationToken);
+        dbContext.Users.Update(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
-            return new UpdateUserResult(true);
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        return new UpdateUserResult(true);
     }
 }
