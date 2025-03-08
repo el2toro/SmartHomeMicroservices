@@ -1,4 +1,4 @@
-﻿using DeviceManagement.API.Extensions;
+﻿using DeviceManagement.API.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 

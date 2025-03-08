@@ -1,4 +1,6 @@
-﻿namespace DeviceManagement.API.Devices.GetDeviceById;
+﻿using DeviceManagement.API.Configuration;
+
+namespace DeviceManagement.API.Devices.GetDeviceById;
 
 public record GetDeviceByIdQuery(int Id) : ICommand<GetDeviceByIdResult>;
 public record GetDeviceByIdResult(object Device);

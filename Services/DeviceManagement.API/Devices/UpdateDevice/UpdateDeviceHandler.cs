@@ -1,4 +1,5 @@
-﻿using DeviceManagement.API.Data;
+﻿using DeviceManagement.API.Configuration;
+using DeviceManagement.API.Data;
 
 namespace DeviceManagement.API.Devices.UpdateDevice;
 

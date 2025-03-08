@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using DeviceManagement.API.Configuration;
+using MongoDB.Bson;
 using System.Reflection.Metadata;
 
 namespace DeviceManagement.API.Devices.GetDevices;

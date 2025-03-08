@@ -1,4 +1,4 @@
-﻿namespace DeviceManagement.API.Extensions;
+﻿namespace DeviceManagement.API.Configuration;
 
 public interface IMongoDbConfiguration
 {

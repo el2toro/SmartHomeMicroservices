@@ -1,6 +1,6 @@
 ﻿namespace DeviceManagement.API.Models;
 
-public class LightDevice : BaseDevice<LightDevice>
+public class LightDevice : BaseDevice
 {
     public string Color { get; set; }
     public string Brightness { get; set; }
