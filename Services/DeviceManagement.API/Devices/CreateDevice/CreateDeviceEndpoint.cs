@@ -1,6 +1,6 @@
 ﻿namespace DeviceManagement.API.Devices.CreateDevice;
 
-public record CreateDeviceRequest(string Device);
+//public record CreateDeviceRequest(JsonElement DeviceAsJson);
 public record CreateDeviceResponse(bool IsSuccess);
 public class CreateDeviceEndpoint : ICarterModule
 {
@@ -8,6 +8,8 @@ public class CreateDeviceEndpoint : ICarterModule
     {
         app.MapPost("/device", async ([FromBody] JsonElement device, ISender sender) =>
         {
+            // TODO: addapt the request
+            // var command = 
             var result = await sender.Send(new CreateDeviceCommand(device));
             //var response = result.Adapt<CreateDeviceResponse>();
             return Results.Created();
