@@ -16,10 +16,10 @@ public static class DeviceExtention
         object device = deviceType switch
         {
             DeviceType.Light => JsonSerializer.Deserialize<LightDevice>(document.ToJson(), jsonOption)!,
-            DeviceType.Thermostat => JsonSerializer.Deserialize<Termostat>(document.ToJson(), jsonOption)!,
-            DeviceType.Camera => JsonSerializer.Deserialize<Camera>(document.ToJson(), jsonOption)!,
-            DeviceType.DoorLock => JsonSerializer.Deserialize<DoorLock>(document.ToJson(), jsonOption)!,
-            _ => throw new Exception("Document type not found")
+            DeviceType.Thermostat => JsonSerializer.Deserialize<TermostatDevice>(document.ToJson(), jsonOption)!,
+            DeviceType.Camera => JsonSerializer.Deserialize<CameraDevice>(document.ToJson(), jsonOption)!,
+            DeviceType.DoorLock => JsonSerializer.Deserialize<DoorLockDevice>(document.ToJson(), jsonOption)!,
+            _ => throw new ArgumentOutOfRangeException("Device type doesn't exist")
         };
         return device;
     }

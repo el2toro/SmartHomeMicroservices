@@ -1,17 +1,16 @@
 ﻿namespace DeviceManagement.API.Devices.CreateDevice;
 
-//public record CreateDeviceRequest(JsonElement DeviceAsJson);
+public record CreateDeviceRequest(JsonElement DeviceAsJson);
 public record CreateDeviceResponse(bool IsSuccess);
 public class CreateDeviceEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/device", async ([FromBody] JsonElement device, ISender sender) =>
+        app.MapPost("/device", async ([AsParameters] CreateDeviceRequest request, ISender sender) =>
         {
-            // TODO: addapt the request
-            // var command = 
-            var result = await sender.Send(new CreateDeviceCommand(device));
-            //var response = result.Adapt<CreateDeviceResponse>();
+            var command = request.Adapt<CreateDeviceCommand>();
+            var result = await sender.Send(command);
+
             return Results.Created();
         })
         .WithName("CreateDevice")

@@ -1,4 +1,4 @@
-using DeviceManagement.API.Extensions;
+using DeviceManagement.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +11,7 @@ builder.Services.AddMediatR(config =>
 builder.Services.AddCarter();
 
 builder.Services.AddSingleton<IMongoDbConfiguration, MongoDbConfiguration>();
+builder.Services.AddScoped<IDeviceData, DeviceData>();
 
 var app = builder.Build();
 

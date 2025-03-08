@@ -1,7 +1,7 @@
 ﻿namespace DeviceManagement.API.Devices.UpdateDevice;
 
 public record UpdateDeviceRequest(JsonElement DeviceAsJson);
-public record UpdateDeviceResponse(bool IsSuccess);
+public record UpdateDeviceResponse(object Device);
 public class UpdateDeviceEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
