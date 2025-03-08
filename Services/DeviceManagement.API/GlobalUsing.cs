@@ -4,3 +4,6 @@ global using MediatR;
 global using Mapster;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Text.Json;
+global using DeviceManagement.API.Extensions;
+global using MongoDB.Driver;
+global using MongoDB.Bson;
