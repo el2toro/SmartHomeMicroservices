@@ -1,12 +1,12 @@
 ﻿namespace DeviceManagement.API.Devices.GetDeviceById;
 
 //public record GetDeviceByIdRequest(string Id);
-public record GetDeviceByIdResponse(string Device);
+public record GetDeviceByIdResponse(object Device);
 public class GetDeviceByIdEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/device/{id}", async (string id, ISender sender) =>
+        app.MapGet("/device/{id}", async (int id, ISender sender) =>
         {
             var result = await sender.Send(new GetDeviceByIdQuery(id));
             var response = result.Adapt<GetDeviceByIdResponse>();
