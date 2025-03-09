@@ -1,6 +1,4 @@
-﻿using DeviceManagement.API.Enums;
-
-namespace DeviceManagement.API.Extensions;
+﻿namespace DeviceManagement.API.Extensions;
 
 public static class DeviceExtension
 {

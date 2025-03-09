@@ -1,19 +1,13 @@
-﻿using DeviceManagement.API.Configuration;
-using MongoDB.Bson;
-using System.Reflection.Metadata;
-
-namespace DeviceManagement.API.Devices.GetDevices;
+﻿namespace DeviceManagement.API.Devices.GetDevices;
 
 public record GetDevicesQuery() : IQuery<GetDevicesResult>;
 public record GetDevicesResult(IEnumerable<object> Devices);
-internal class GetDevicesHandler(IMongoDbConfiguration mongoDbConfiguration)
+internal class GetDevicesHandler(MongoDbContext dbContext)
     : IQueryHandler<GetDevicesQuery, GetDevicesResult>
 {
     public async Task<GetDevicesResult> Handle(GetDevicesQuery query, CancellationToken cancellationToken)
     {
-        var collection = mongoDbConfiguration.GetCollection();
-
-        var result = await collection.FindAsync(c => true);
+        var result = await dbContext.DeviceCollection.FindAsync(c => true);
 
         var data = AdaptResult(result);
 

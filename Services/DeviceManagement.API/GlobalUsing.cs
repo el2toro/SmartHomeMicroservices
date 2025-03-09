@@ -8,3 +8,7 @@ global using MongoDB.Driver;
 global using MongoDB.Bson;
 global using DeviceManagement.API.Models;
 global using DeviceManagement.API.Enums;
+global using DeviceManagement.API.Data;
+global using DeviceManagement.API.Exceptions;
+global using Core.Exceptions;
+

@@ -1,5 +1,5 @@
-using DeviceManagement.API.Configuration;
 using DeviceManagement.API.Data;
+using Core.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +11,12 @@ builder.Services.AddMediatR(config =>
 });
 builder.Services.AddCarter();
 
-builder.Services.AddSingleton<IMongoDbConfiguration, MongoDbConfiguration>();
+builder.Services.RegisterBsonSerializer();
+
+builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IDeviceData, DeviceData>();
+
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 

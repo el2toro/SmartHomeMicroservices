@@ -1,17 +1,24 @@
-﻿using DeviceManagement.API.Configuration;
-
-namespace DeviceManagement.API.Devices.CreateDevice;
-public record CreateDeviceCommand(JsonElement Device) : ICommand<CreateDeviceResult>;
+﻿namespace DeviceManagement.API.Devices.CreateDevice;
+public record CreateDeviceCommand(JsonElement DeviceAsJson) : ICommand<CreateDeviceResult>;
 public record CreateDeviceResult(bool IsSuccess);
 
-internal class CreateDeviceHandler(IMongoDbConfiguration mongoDbConfiguration)
+internal class CreateDeviceHandler(MongoDbContext dbContext)
     : ICommandHandler<CreateDeviceCommand, CreateDeviceResult>
 {
     public async Task<CreateDeviceResult> Handle(CreateDeviceCommand command, CancellationToken cancellationToken)
     {
-        var collection = mongoDbConfiguration.GetCollection();
+        Guid deviceId = command.DeviceAsJson.GetProperty("deviceId").GetGuid();
 
-        await collection.InsertOneAsync(BsonDocument.Parse(command.Device.GetRawText()));
+        var filter = Builders<BsonDocument>.Filter.Eq("deviceId", deviceId.ToString());
+        var result = await dbContext.DeviceCollection.Find(filter).FirstOrDefaultAsync();
+
+        if (result is not null)
+        {
+            throw new BadRequestException($"Device with id: {deviceId} already exists in database");
+        }
+
+
+        await dbContext.DeviceCollection.InsertOneAsync(BsonDocument.Parse(command.DeviceAsJson.GetRawText()), cancellationToken);
 
         return new CreateDeviceResult(true);
     }
