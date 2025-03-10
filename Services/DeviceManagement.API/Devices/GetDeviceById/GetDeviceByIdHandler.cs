@@ -7,6 +7,8 @@ public class GetDeviceByIdHandler(MongoDbContext dbContext)
 {
     public async Task<GetDeviceByIdResult> Handle(GetDeviceByIdQuery query, CancellationToken cancellationToken)
     {
+        //TODO: remove hardecoded deviceId
+        //Add fluent validation
         var filter = Builders<BsonDocument>.Filter.Eq("deviceId", query.Id.ToString());
 
         var result = await dbContext.DeviceCollection.Find(filter).FirstOrDefaultAsync() ??

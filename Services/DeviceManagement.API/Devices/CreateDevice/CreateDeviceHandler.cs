@@ -7,6 +7,8 @@ internal class CreateDeviceHandler(MongoDbContext dbContext)
 {
     public async Task<CreateDeviceResult> Handle(CreateDeviceCommand command, CancellationToken cancellationToken)
     {
+        //TODO: remove harcoded deviceId
+        //Add fluent validation
         Guid deviceId = command.DeviceAsJson.GetProperty("deviceId").GetGuid();
 
         var filter = Builders<BsonDocument>.Filter.Eq("deviceId", deviceId.ToString());

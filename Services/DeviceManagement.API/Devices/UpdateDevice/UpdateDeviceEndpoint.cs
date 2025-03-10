@@ -15,6 +15,7 @@ public class UpdateDeviceEndpoint : ICarterModule
         })
         .WithName("UpdateDevice")
         .Produces<UpdateDeviceResponse>(StatusCodes.Status200OK)
+        .Produces<UpdateDeviceResponse>(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Update Device")
         .WithDescription("Update Device");

@@ -7,6 +7,8 @@ internal class DeleteDeviceHandler(MongoDbContext dbContext)
 {
     public async Task<DeleteDeviceResult> Handle(DeleteDeviceCommand command, CancellationToken cancellationToken)
     {
+        //TODO: remove hardcode deviceId
+        //Add fluent validation
         var filter = Builders<BsonDocument>.Filter.Eq("deviceId", command.Id);
 
         await dbContext.DeviceCollection.DeleteOneAsync(filter);

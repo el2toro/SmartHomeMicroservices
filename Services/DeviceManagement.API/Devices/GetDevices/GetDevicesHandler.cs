@@ -21,7 +21,6 @@ internal class GetDevicesHandler(MongoDbContext dbContext)
         document.ForEachAsync(c =>
         {
             result.Add(c.ToDevice());
-
         });
 
         return result;

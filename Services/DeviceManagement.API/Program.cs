@@ -1,5 +1,6 @@
-using DeviceManagement.API.Data;
+using Core.Behaviors;
 using Core.Exceptions.Handler;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +9,11 @@ var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(assembly);
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
-builder.Services.AddCarter();
 
+builder.Services.AddValidatorsFromAssembly(assembly);
+builder.Services.AddCarter();
 builder.Services.RegisterBsonSerializer();
 
 builder.Services.AddSingleton<MongoDbContext>();

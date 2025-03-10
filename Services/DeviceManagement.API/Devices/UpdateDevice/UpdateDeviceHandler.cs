@@ -7,6 +7,8 @@ internal class UpdateDeviceHandler(MongoDbContext dbContext, IDeviceData deviceD
 {
     public async Task<UpdateDeviceResult> Handle(UpdateDeviceCommand command, CancellationToken cancellationToken)
     {
+        //TODO: remove hardecoded deviceId
+        //Add fluent validation
         Guid deviceId = command.DeviceAsJson.GetProperty("deviceId").GetGuid();
 
         var filter = Builders<BsonDocument>.Filter.Eq("deviceId", deviceId);
