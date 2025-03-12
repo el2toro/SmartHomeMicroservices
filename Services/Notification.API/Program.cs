@@ -1,3 +1,4 @@
+using Core.Exceptions.Handler;
 using HotelReservation.Services;
 using Microsoft.AspNetCore.Mvc;
 using Notification.API.Dtos;
@@ -16,6 +17,8 @@ builder.Services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"
 builder.Services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
 builder.Services.Configure<TwilioSettings>(configuration.GetSection("TwilioSettings"));
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 var smsNotificationService = app.Services.GetRequiredService<ISmsNotification>();
@@ -31,7 +34,9 @@ app.MapPost("/mail", async ([FromBody] MailDto mail) =>
 
 app.MapPost("/sms", async ([FromBody] SmsDto smsDto) =>
 {
-    await smsNotificationService.SendSmsAsync(smsDto.FromNumber, smsDto.Message);
+    await smsNotificationService.SendSmsAsync(smsDto);
 });
+
+app.UseExceptionHandler(options => { });
 
 app.Run();

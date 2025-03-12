@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using Notification.API.Dtos;
 using Notification.API.Settings;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
@@ -7,7 +8,7 @@ namespace HotelReservation.Services;
 
 public interface ISmsNotification
 {
-    Task<string> SendSmsAsync(string toNumber, string message);
+    Task<string> SendSmsAsync(SmsDto smsDto);
 }
 public class SmsNotification(IOptions<TwilioSettings> smsOptions,
     ILogger<ISmsNotification> logger) : ISmsNotification
@@ -15,23 +16,15 @@ public class SmsNotification(IOptions<TwilioSettings> smsOptions,
     private readonly IOptions<TwilioSettings> _smsOptions = smsOptions;
     private readonly ILogger<ISmsNotification> _logger = logger;
 
-    public async Task<string> SendSmsAsync(string toNumber, string message)
+    public async Task<string> SendSmsAsync(SmsDto smsDto)
     {
         TwilioClient.Init(_smsOptions.Value.AccountSid, _smsOptions.Value.AuthToken);
 
-        try
-        {
-            var response = await MessageResource.CreateAsync(
-            body: message,
-            from: new Twilio.Types.PhoneNumber(_smsOptions.Value.FromNumber),
-            to: new Twilio.Types.PhoneNumber(toNumber));
+        var response = await MessageResource.CreateAsync(
+        body: smsDto.Message,
+        from: new Twilio.Types.PhoneNumber(_smsOptions.Value.FromNumber),
+        to: new Twilio.Types.PhoneNumber(smsDto.ToNumber));
 
-            return response.Body;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Something went wrong while trying to send sms", ex);
-            throw;
-        }
+        return response.Body;
     }
 }
