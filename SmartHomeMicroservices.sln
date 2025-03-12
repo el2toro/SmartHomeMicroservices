@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2E397170-4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core\Core.csproj", "{A0F0FF69-2E06-4822-AC3D-F6DC35717804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManagement.API", "Services\DeviceManagement.API\DeviceManagement.API.csproj", "{6926CD6B-EF26-4DB2-94D5-013C0BB2E119}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceManagement.API", "Services\DeviceManagement.API\DeviceManagement.API.csproj", "{6926CD6B-EF26-4DB2-94D5-013C0BB2E119}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.API", "Services\Notification.API\Notification.API.csproj", "{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notification.API", "Services\Notification.API\Notification.API.csproj", "{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
