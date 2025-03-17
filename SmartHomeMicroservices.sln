@@ -11,7 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2E397170-4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core\Core.csproj", "{A0F0FF69-2E06-4822-AC3D-F6DC35717804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManagement.API", "Services\DeviceManagement.API\DeviceManagement.API.csproj", "{6926CD6B-EF26-4DB2-94D5-013C0BB2E119}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceManagement.API", "Services\DeviceManagement.API\DeviceManagement.API.csproj", "{6926CD6B-EF26-4DB2-94D5-013C0BB2E119}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notification.API", "Services\Notification.API\Notification.API.csproj", "{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{6926CD6B-EF26-4DB2-94D5-013C0BB2E119}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6926CD6B-EF26-4DB2-94D5-013C0BB2E119}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6926CD6B-EF26-4DB2-94D5-013C0BB2E119}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{67553587-04EF-4F8F-94D8-BDF1049755D2} = {18C852D1-0537-4942-8FF4-D4BE3D1C0CEA}
 		{A0F0FF69-2E06-4822-AC3D-F6DC35717804} = {2E397170-4501-475F-921F-54EADFACBA16}
 		{6926CD6B-EF26-4DB2-94D5-013C0BB2E119} = {18C852D1-0537-4942-8FF4-D4BE3D1C0CEA}
+		{C05BC14B-44A9-45F3-9D5C-FAC07AD8B42A} = {18C852D1-0537-4942-8FF4-D4BE3D1C0CEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBE4C413-ECD8-4FE0-A65E-8F24F800F7AC}

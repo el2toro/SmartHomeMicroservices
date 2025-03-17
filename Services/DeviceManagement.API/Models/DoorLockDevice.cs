@@ -1,6 +1,6 @@
 ﻿namespace DeviceManagement.API.Models;
 
-public class DoorLockDevice : BaseDevice<DoorLockDevice>
+public class DoorLockDevice : BaseDevice
 {
     public int UnlockSecret { get; set; }
 }

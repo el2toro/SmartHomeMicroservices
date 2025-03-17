@@ -1,5 +1,6 @@
-﻿namespace DeviceManagement.API.Models;
-public class BaseDevice
+﻿namespace DeviceManagement.API.Devices.EvenHandlers;
+
+public class DeviceCreatedEvent
 {
     public Guid DeviceId { get; set; }
     public string Name { get; set; }

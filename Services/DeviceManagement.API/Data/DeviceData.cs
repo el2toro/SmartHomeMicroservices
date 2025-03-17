@@ -1,6 +1,4 @@
-﻿using DeviceManagement.API.Models;
-
-namespace DeviceManagement.API.Data;
+﻿namespace DeviceManagement.API.Data;
 
 public interface IDeviceData
 {
@@ -28,6 +26,7 @@ public class DeviceData : IDeviceData
             DeviceType.Camera => UpdateCameraDevice(deviceAsJson),
             DeviceType.Thermostat => UpdateTermostatDevice(deviceAsJson),
             DeviceType.DoorLock => UpdateDoorLookDevice(deviceAsJson),
+            DeviceType.Sensor => UpdateSensorDevice(deviceAsJson),
             _ => throw new ArgumentOutOfRangeException("Device type not found")
         };
 
@@ -38,11 +37,9 @@ public class DeviceData : IDeviceData
     {
         var lightDevice = JsonSerializer.Deserialize<LightDevice>(deviceAsJson, _jsonSerializerOptions);
 
-        var updateDefinition = Builders<BsonDocument>.Update.Set("color", lightDevice?.Color)
-        .Set("brightness", lightDevice?.Brightness)
-        .Set("name", lightDevice?.Name)
-        .Set("isOn", lightDevice?.IsOn)
-        .Set("status", lightDevice?.Status);
+        var updateDefinition = CommonUpdate(deviceAsJson)
+            .Set(nameof(lightDevice.Color), lightDevice?.Color)
+            .Set(nameof(lightDevice.Brightness), lightDevice?.Brightness);
 
         return updateDefinition;
     }
@@ -51,10 +48,8 @@ public class DeviceData : IDeviceData
     {
         CameraDevice cameraDevice = JsonSerializer.Deserialize<CameraDevice>(deviceAsJson, _jsonSerializerOptions)!;
 
-        var updateDefinition = Builders<BsonDocument>.Update
-        .Set("name", cameraDevice?.Name)
-        .Set("isOn", cameraDevice?.IsOn)
-        .Set("status", cameraDevice?.Status);
+        var updateDefinition = CommonUpdate(deviceAsJson)
+        .Set(nameof(cameraDevice.IsRecording), cameraDevice?.IsRecording);
 
         return updateDefinition;
     }
@@ -63,10 +58,8 @@ public class DeviceData : IDeviceData
     {
         TermostatDevice termostatDevice = JsonSerializer.Deserialize<TermostatDevice>(deviceAsJson, _jsonSerializerOptions)!;
 
-        var updateDefinition = Builders<BsonDocument>.Update
-        .Set("name", termostatDevice?.Name)
-        .Set("isOn", termostatDevice?.IsOn)
-        .Set("status", termostatDevice?.Status);
+        var updateDefinition = CommonUpdate(deviceAsJson)
+        .Set(nameof(termostatDevice.Temperature).ToCamelCase(), termostatDevice?.Temperature);
 
         return updateDefinition;
     }
@@ -75,10 +68,28 @@ public class DeviceData : IDeviceData
     {
         DoorLockDevice doorLockDevice = JsonSerializer.Deserialize<DoorLockDevice>(deviceAsJson, _jsonSerializerOptions)!;
 
+        var updateDefinition = CommonUpdate(deviceAsJson)
+        .Set(nameof(doorLockDevice.UnlockSecret).ToCamelCase(), doorLockDevice?.UnlockSecret);
+
+        return updateDefinition;
+    }
+
+    private UpdateDefinition<BsonDocument> UpdateSensorDevice(JsonElement deviceAsJson)
+    {
+        SensorDevice sensorDevice = JsonSerializer.Deserialize<SensorDevice>(deviceAsJson, _jsonSerializerOptions)!;
+
+        return CommonUpdate(deviceAsJson);
+    }
+
+    private UpdateDefinition<BsonDocument> CommonUpdate(JsonElement deviceAsJson)
+    {
+        BaseDevice baseDevice = JsonSerializer.Deserialize<BaseDevice>(deviceAsJson, _jsonSerializerOptions)!;
+
         var updateDefinition = Builders<BsonDocument>.Update
-        .Set("name", doorLockDevice?.Name)
-        .Set("isOn", doorLockDevice?.IsOn)
-        .Set("status", doorLockDevice?.Status);
+        .Set(nameof(baseDevice.Name).ToCamelCase(), baseDevice?.Name)
+        .Set(nameof(baseDevice.IsOn).ToCamelCase(), baseDevice?.IsOn)
+        .Set(nameof(baseDevice.Status).ToCamelCase(), baseDevice?.Status)
+        .Set(nameof(baseDevice.DeviceType).ToCamelCase(), baseDevice?.DeviceType);
 
         return updateDefinition;
     }

@@ -4,17 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>c044d8b0-7039-4460-b94e-df3b88ee4a2c</UserSecretsId>
+    <UserSecretsId>d68777ef-24b1-4420-a1a1-6228a99e4a3f</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Carter" Version="8.0.0" />
-    <PackageReference Include="Mapster" Version="7.4.0" />
-    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
-    <PackageReference Include="MongoDB.Driver" Version="3.2.1" />
+    <PackageReference Include="Twilio" Version="7.9.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,8 +1,6 @@
-﻿using DeviceManagement.API.Models;
+﻿namespace DeviceManagement.API.Extensions;
 
-namespace DeviceManagement.API.Extensions;
-
-public static class DeviceExtention
+public static class DeviceExtension
 {
     public static object ToDevice(this BsonDocument document)
     {

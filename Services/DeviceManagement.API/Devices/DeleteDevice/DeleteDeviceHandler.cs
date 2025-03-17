@@ -1,21 +1,17 @@
-﻿using DeviceManagement.API.Extensions;
-using MongoDB.Bson;
-using MongoDB.Driver;
+﻿namespace DeviceManagement.API.Devices.DeleteDevice;
 
-namespace DeviceManagement.API.Devices.DeleteDevice;
-
-public record DeleteDeviceCommand(int Id) : ICommand<DeleteDeviceResult>;
+public record DeleteDeviceCommand(Guid Id) : ICommand<DeleteDeviceResult>;
 public record DeleteDeviceResult(bool IsSuccess);
-internal class DeleteDeviceHandler(IMongoDbConfiguration mongoDbConfiguration)
+internal class DeleteDeviceHandler(MongoDbContext dbContext)
     : ICommandHandler<DeleteDeviceCommand, DeleteDeviceResult>
 {
     public async Task<DeleteDeviceResult> Handle(DeleteDeviceCommand command, CancellationToken cancellationToken)
     {
-        var collection = mongoDbConfiguration.GetCollection();
-
+        //TODO: remove hardcode deviceId
+        //Add fluent validation
         var filter = Builders<BsonDocument>.Filter.Eq("deviceId", command.Id);
 
-        await collection.DeleteOneAsync(filter);
+        await dbContext.DeviceCollection.DeleteOneAsync(filter);
 
         return new DeleteDeviceResult(true);
     }

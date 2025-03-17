@@ -6,9 +6,9 @@ public class DeleteDeviceEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/device/{id}", async (int id, ISender sender) =>
+        app.MapDelete("/device/{id}", async (string id, ISender sender) =>
         {
-            var result = await sender.Send(new DeleteDeviceCommand(id));
+            var result = await sender.Send(new DeleteDeviceCommand(Guid.Parse(id)));
             var response = result.Adapt<DeleteDeviceResponse>();
             return Results.Ok(response);
         })
