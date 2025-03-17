@@ -1,8 +1,11 @@
-﻿namespace DeviceManagement.API.Devices.CreateDevice;
+﻿using DeviceManagement.API.Devices.EvenHandlers;
+using MassTransit;
+
+namespace DeviceManagement.API.Devices.CreateDevice;
 public record CreateDeviceCommand(JsonElement DeviceAsJson) : ICommand<CreateDeviceResult>;
 public record CreateDeviceResult(bool IsSuccess);
 
-internal class CreateDeviceHandler(MongoDbContext dbContext)
+internal class CreateDeviceHandler(MongoDbContext dbContext, IPublishEndpoint publishEndpoint)
     : ICommandHandler<CreateDeviceCommand, CreateDeviceResult>
 {
     public async Task<CreateDeviceResult> Handle(CreateDeviceCommand command, CancellationToken cancellationToken)
@@ -19,8 +22,19 @@ internal class CreateDeviceHandler(MongoDbContext dbContext)
             throw new BadRequestException($"Device with id: {deviceId} already exists in database");
         }
 
+        BsonDocument.TryParse(command.DeviceAsJson.GetRawText(), out BsonDocument device);
 
-        await dbContext.DeviceCollection.InsertOneAsync(BsonDocument.Parse(command.DeviceAsJson.GetRawText()), cancellationToken);
+        try
+        {
+            await publishEndpoint.Publish(new DeviceCreatedEvent() { Name = "event" }, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
+        await dbContext.DeviceCollection.InsertOneAsync(device, cancellationToken);
 
         return new CreateDeviceResult(true);
     }

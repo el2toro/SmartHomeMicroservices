@@ -8,6 +8,7 @@ public class MongoDbContext
     private readonly string _databaseName;
     private readonly string _collectionName;
 
+    //TODO: Use IOptions<T> to get configurations
     public MongoDbContext(IConfiguration configuration)
     {
         _configuration = configuration;
