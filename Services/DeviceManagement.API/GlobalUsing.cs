@@ -11,4 +11,6 @@ global using DeviceManagement.API.Enums;
 global using DeviceManagement.API.Data;
 global using DeviceManagement.API.Exceptions;
 global using Core.Exceptions;
-
+global using FluentValidation;
+global using MassTransit;
+global using DeviceManagement.API.Constants;

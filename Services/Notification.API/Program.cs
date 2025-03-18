@@ -11,11 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IEmailNotification, EmailNotification>();
 builder.Services.AddTransient<ISmsNotification, SmsNotification>();
 
-IConfiguration configuration = builder.Configuration;
-
-builder.Services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
-builder.Services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
-builder.Services.Configure<TwilioSettings>(configuration.GetSection("TwilioSettings"));
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("TwilioSettings"));
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 

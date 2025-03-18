@@ -2,16 +2,24 @@
 
 public record UpdateDeviceCommand(JsonElement DeviceAsJson) : ICommand<UpdateDeviceResult>;
 public record UpdateDeviceResult(object Device);
+
+public class UpdateDeviceCommandValidator : AbstractValidator<UpdateDeviceCommand>
+{
+    public UpdateDeviceCommandValidator()
+    {
+        //TODO: add more rules
+        RuleFor(x => x.DeviceAsJson).NotNull().WithMessage("Device Object is required");
+    }
+}
+
 internal class UpdateDeviceHandler(MongoDbContext dbContext, IDeviceData deviceData)
     : ICommandHandler<UpdateDeviceCommand, UpdateDeviceResult>
 {
     public async Task<UpdateDeviceResult> Handle(UpdateDeviceCommand command, CancellationToken cancellationToken)
     {
-        //TODO: remove hardecoded deviceId
-        //Add fluent validation
-        Guid deviceId = command.DeviceAsJson.GetProperty("deviceId").GetGuid();
+        Guid deviceId = command.DeviceAsJson.GetProperty(DeviceConstants.DEVICE_ID).GetGuid();
 
-        var filter = Builders<BsonDocument>.Filter.Eq("deviceId", deviceId);
+        var filter = Builders<BsonDocument>.Filter.Eq(DeviceConstants.DEVICE_ID, deviceId);
 
         var updateDefinition = deviceData.GetUpdateDeviceDefinition(command.DeviceAsJson);
 

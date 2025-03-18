@@ -1,27 +1,21 @@
-﻿namespace DeviceManagement.API.Data;
+﻿using DeviceManagement.API.Data.DbSettings;
+using Microsoft.Extensions.Options;
+
+namespace DeviceManagement.API.Data;
 
 public class MongoDbContext
 {
-    private readonly IConfiguration _configuration;
+    private readonly IOptions<MongoDbSettings> _mongoDbSettings;
     private readonly IMongoDatabase _database;
-    private readonly string _connectionString;
-    private readonly string _databaseName;
-    private readonly string _collectionName;
 
-    //TODO: Use IOptions<T> to get configurations
-    public MongoDbContext(IConfiguration configuration)
+    public MongoDbContext(IOptions<MongoDbSettings> mongoDbSettings)
     {
-        _configuration = configuration;
+        _mongoDbSettings = mongoDbSettings;
 
-        _connectionString = _configuration.GetSection("MongoDbSettings")["ConnectionString"]!;
-        _databaseName = _configuration.GetSection("MongoDbSettings")["DatabaseName"]!;
-        _collectionName = _configuration.GetSection("MongoDbSettings:Collections")["DevicesCollection"]!;
-
-        var client = new MongoClient(_connectionString);
-        _database = client.GetDatabase(_databaseName);
+        var client = new MongoClient(_mongoDbSettings.Value.ConnectionString);
+        _database = client.GetDatabase(_mongoDbSettings.Value.DatabaseName);
     }
 
-    // Add properties for each of your collections, for example:
     public IMongoCollection<BsonDocument> DeviceCollection =>
-        _database.GetCollection<BsonDocument>(_collectionName);
+        _database.GetCollection<BsonDocument>(_mongoDbSettings.Value.Collections.First().Value);
 }

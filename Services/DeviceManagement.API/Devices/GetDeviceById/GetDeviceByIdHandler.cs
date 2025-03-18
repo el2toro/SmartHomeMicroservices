@@ -1,4 +1,6 @@
-﻿namespace DeviceManagement.API.Devices.GetDeviceById;
+﻿using DeviceManagement.API.Constants;
+
+namespace DeviceManagement.API.Devices.GetDeviceById;
 
 public record GetDeviceByIdQuery(Guid Id) : ICommand<GetDeviceByIdResult>;
 public record GetDeviceByIdResult(object Device);
@@ -7,9 +9,9 @@ public class GetDeviceByIdHandler(MongoDbContext dbContext)
 {
     public async Task<GetDeviceByIdResult> Handle(GetDeviceByIdQuery query, CancellationToken cancellationToken)
     {
-        //TODO: remove hardecoded deviceId
+        //TODO: 
         //Add fluent validation
-        var filter = Builders<BsonDocument>.Filter.Eq("deviceId", query.Id.ToString());
+        var filter = Builders<BsonDocument>.Filter.Eq(DeviceConstants.DEVICE_ID, query.Id.ToString());
 
         var result = await dbContext.DeviceCollection.Find(filter).FirstOrDefaultAsync() ??
              throw new DeviceNotFoundException(query.Id.ToString());

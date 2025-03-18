@@ -7,11 +7,10 @@ internal class GetDevicesHandler(MongoDbContext dbContext)
 {
     public async Task<GetDevicesResult> Handle(GetDevicesQuery query, CancellationToken cancellationToken)
     {
+        // TO use repository pattern??
         var result = await dbContext.DeviceCollection.FindAsync(c => true);
 
-        var data = AdaptResult(result);
-
-        return new GetDevicesResult(data);
+        return new GetDevicesResult(AdaptResult(result));
     }
 
     private IEnumerable<object> AdaptResult(IAsyncCursor<BsonDocument> document)
