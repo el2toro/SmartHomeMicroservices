@@ -2,8 +2,6 @@ using Core.Behaviors;
 using Core.Exceptions.Handler;
 using Core.Messaging.MassTransit;
 using DeviceManagement.API.Data.DbSettings;
-using DeviceManagement.API.Repository;
-using MassTransit.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
