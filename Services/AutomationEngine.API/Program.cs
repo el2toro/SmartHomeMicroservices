@@ -11,8 +11,8 @@ builder.Services.AddMessageBroker(builder.Configuration, Assembly.GetExecutingAs
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//app.UseTemperatureMonitoring(builder.Configuration.GetSection("Endpoints"));
-app.UseMotionDetection(builder.Configuration.GetSection("Endpoints"));
+app.UseTemperatureMonitoring(builder.Configuration.GetSection("Endpoints"));
+//app.UseMotionDetection(builder.Configuration.GetSection("Endpoints"));
 
 
 app.MapGet("/engine", () =>

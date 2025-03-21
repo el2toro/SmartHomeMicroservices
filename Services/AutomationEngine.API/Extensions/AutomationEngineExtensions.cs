@@ -10,7 +10,7 @@ public static class AutomationEngineExtensions
         Timer timer = new Timer(async _ =>
         //Calls GetTemperature every 10 seconds
         await GetIndoorTemperature(app.ApplicationServices, configurationSection),
-        null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+        null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
     }
 
     public static void UseMotionDetection(this IApplicationBuilder app,

@@ -6,5 +6,6 @@ public enum DeviceType
     Thermostat = 2,
     Camera = 3,
     DoorLock = 4,
-    Sensor = 5
+    Sensor = 5,
+    AirConditioner = 6
 }

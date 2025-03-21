@@ -49,5 +49,5 @@ public class DeviceRepository(MongoDbContext dbContext, IDeviceData deviceData) 
     }
 
     private FilterDefinition<BsonDocument> GetFilterDefinition(Guid deviceId)
-     => Builders<BsonDocument>.Filter.Eq(DeviceConstants.DEVICE_ID, deviceId);
+     => Builders<BsonDocument>.Filter.Eq(DeviceConstants.DEVICE_ID, deviceId.ToString());
 }

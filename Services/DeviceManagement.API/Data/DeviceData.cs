@@ -27,6 +27,7 @@ public class DeviceData : IDeviceData
             DeviceType.Thermostat => UpdateTermostatDevice(deviceAsJson),
             DeviceType.DoorLock => UpdateDoorLookDevice(deviceAsJson),
             DeviceType.Sensor => UpdateSensorDevice(deviceAsJson),
+            DeviceType.AirConditioner => UpdateAirConditionerDevice(deviceAsJson),
             _ => throw new ArgumentOutOfRangeException("Device type not found")
         };
 
@@ -79,6 +80,17 @@ public class DeviceData : IDeviceData
         SensorDevice sensorDevice = JsonSerializer.Deserialize<SensorDevice>(deviceAsJson, _jsonSerializerOptions)!;
 
         return CommonUpdate(deviceAsJson);
+    }
+
+    private UpdateDefinition<BsonDocument> UpdateAirConditionerDevice(JsonElement deviceAsJson)
+    {
+        AirConditioner airConditioner = JsonSerializer.Deserialize<AirConditioner>(deviceAsJson, _jsonSerializerOptions)!;
+
+        var updateDefinition = CommonUpdate(deviceAsJson)
+        .Set(nameof(airConditioner.Fan).ToCamelCase(), airConditioner?.Fan)
+        .Set(nameof(airConditioner.Temperature).ToCamelCase(), airConditioner?.Temperature);
+
+        return updateDefinition;
     }
 
     private UpdateDefinition<BsonDocument> CommonUpdate(JsonElement deviceAsJson)
