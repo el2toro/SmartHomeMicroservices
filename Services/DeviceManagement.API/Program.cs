@@ -2,6 +2,8 @@ using Core.Behaviors;
 using Core.Exceptions.Handler;
 using Core.Messaging.MassTransit;
 using DeviceManagement.API.Data.DbSettings;
+using DeviceManagement.API.Repository;
+using MassTransit.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.RegisterBsonSerializer();
 
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IDeviceData, DeviceData>();
+builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 

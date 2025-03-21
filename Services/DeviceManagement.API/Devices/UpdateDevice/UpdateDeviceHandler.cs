@@ -12,18 +12,12 @@ public class UpdateDeviceCommandValidator : AbstractValidator<UpdateDeviceComman
     }
 }
 
-internal class UpdateDeviceHandler(MongoDbContext dbContext, IDeviceData deviceData)
+internal class UpdateDeviceHandler(IDeviceRepository deviceRepository)
     : ICommandHandler<UpdateDeviceCommand, UpdateDeviceResult>
 {
     public async Task<UpdateDeviceResult> Handle(UpdateDeviceCommand command, CancellationToken cancellationToken)
     {
-        Guid deviceId = command.DeviceAsJson.GetProperty(DeviceConstants.DEVICE_ID).GetGuid();
-
-        var filter = Builders<BsonDocument>.Filter.Eq(DeviceConstants.DEVICE_ID, deviceId);
-
-        var updateDefinition = deviceData.GetUpdateDeviceDefinition(command.DeviceAsJson);
-
-        var result = await dbContext.DeviceCollection.FindOneAndUpdateAsync(filter, updateDefinition);
+        var result = await deviceRepository.UpdateDevice(command.DeviceAsJson, cancellationToken);
 
         return new UpdateDeviceResult(result.ToDevice());
     }

@@ -2,13 +2,12 @@
 
 public record GetDevicesQuery() : IQuery<GetDevicesResult>;
 public record GetDevicesResult(IEnumerable<object> Devices);
-internal class GetDevicesHandler(MongoDbContext dbContext)
+internal class GetDevicesHandler(IDeviceRepository deviceRepository)
     : IQueryHandler<GetDevicesQuery, GetDevicesResult>
 {
     public async Task<GetDevicesResult> Handle(GetDevicesQuery query, CancellationToken cancellationToken)
     {
-        // TO use repository pattern??
-        var result = await dbContext.DeviceCollection.FindAsync(c => true);
+        var result = await deviceRepository.GetDevices();
 
         return new GetDevicesResult(AdaptResult(result));
     }

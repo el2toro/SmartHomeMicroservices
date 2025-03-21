@@ -13,23 +13,21 @@ public class CreateDeviceCommandValidator : AbstractValidator<CreateDeviceComman
     }
 }
 
-internal class CreateDeviceHandler(MongoDbContext dbContext, IPublishEndpoint publishEndpoint)
+internal class CreateDeviceHandler(IDeviceRepository deviceRepository, IPublishEndpoint publishEndpoint)
     : ICommandHandler<CreateDeviceCommand, CreateDeviceResult>
 {
     public async Task<CreateDeviceResult> Handle(CreateDeviceCommand command, CancellationToken cancellationToken)
     {
         Guid deviceId = command.DeviceAsJson.GetProperty(DeviceConstants.DEVICE_ID).GetGuid();
 
-        var filter = Builders<BsonDocument>.Filter.Eq(DeviceConstants.DEVICE_ID, deviceId.ToString());
-        var result = await dbContext.DeviceCollection.Find(filter).FirstOrDefaultAsync();
+        var result = await deviceRepository.GetDeviceById(deviceId);
 
         if (result is not null)
         {
             throw new BadRequestException($"Device with id: {deviceId} already exists in database");
         }
 
-        BsonDocument.TryParse(command.DeviceAsJson.GetRawText(), out BsonDocument device);
-        await dbContext.DeviceCollection.InsertOneAsync(device, new InsertOneOptions(), cancellationToken);
+        await deviceRepository.CreateDevice(command.DeviceAsJson, cancellationToken);
 
         await publishEndpoint.Publish(new DeviceCreatedEvent(command.DeviceAsJson), cancellationToken);
 

@@ -1,4 +1,4 @@
-﻿using MassTransit;
+﻿using DeviceManagement.API.Dtos;
 
 namespace DeviceManagement.API.Devices.EvenHandlers;
 
@@ -9,8 +9,13 @@ public class DeviceCreatedEventHandler(IConfiguration configuration)
     public async Task Consume(ConsumeContext<DeviceCreatedEvent> context)
     {
         var client = new HttpClient();
-        var mailEndpoint = _configuration.GetSection("Endpoints:MailEndpoint").Value;
+        var mailEndpoint = _configuration["Endpoints:MailEndpoint"];
 
-        await client.PostAsJsonAsync(mailEndpoint, context.Message);
+        await client.PostAsJsonAsync(mailEndpoint, BuildMessage(context.Message));
+    }
+
+    private MailDto BuildMessage(DeviceCreatedEvent deviceCreatedEvent)
+    {
+        return new MailDto("New device created", deviceCreatedEvent.DeviceAsJson.ToString());
     }
 }

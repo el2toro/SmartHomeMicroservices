@@ -1,19 +1,16 @@
-﻿using DeviceManagement.API.Constants;
-
-namespace DeviceManagement.API.Devices.DeleteDevice;
+﻿namespace DeviceManagement.API.Devices.DeleteDevice;
 
 public record DeleteDeviceCommand(Guid Id) : ICommand<DeleteDeviceResult>;
 public record DeleteDeviceResult(bool IsSuccess);
-internal class DeleteDeviceHandler(MongoDbContext dbContext)
+internal class DeleteDeviceHandler(IDeviceRepository deviceRepository)
     : ICommandHandler<DeleteDeviceCommand, DeleteDeviceResult>
 {
     public async Task<DeleteDeviceResult> Handle(DeleteDeviceCommand command, CancellationToken cancellationToken)
     {
         //TODO: 
         //Add fluent validation
-        var filter = Builders<BsonDocument>.Filter.Eq(DeviceConstants.DEVICE_ID, command.Id);
 
-        await dbContext.DeviceCollection.DeleteOneAsync(filter);
+        await deviceRepository.DeleteDevice(command.Id);
 
         return new DeleteDeviceResult(true);
     }

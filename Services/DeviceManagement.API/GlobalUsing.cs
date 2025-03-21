@@ -14,3 +14,4 @@ global using Core.Exceptions;
 global using FluentValidation;
 global using MassTransit;
 global using DeviceManagement.API.Constants;
+global using DeviceManagement.API.Repository;
