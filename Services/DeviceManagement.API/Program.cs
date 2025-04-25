@@ -21,7 +21,7 @@ builder.Services.AddCarter();
 builder.Services.RegisterBsonSerializer();
 builder.Services.AddSignalR();
 
-builder.Services.AddSingleton<MongoDbContext>();
+builder.Services.AddScoped<MongoDbContext>();
 builder.Services.AddScoped<IDeviceData, DeviceData>();
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 
